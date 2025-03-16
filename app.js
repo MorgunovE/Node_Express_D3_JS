@@ -1,41 +1,51 @@
-const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const morgan = require('morgan');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+// Load environment variables
+dotenv.config();
 
+// Initialize Express app
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-app.use(logger('dev'));
+// Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(morgan('dev'));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Set up view engine (we'll use EJS)
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// Connect to MongoDB
+mongoose.connect(process.env.DB_URI)
+  .then(() => console.log('MongoDB connecté'))
+  .catch(err => console.error('Erreur de connexion MongoDB:', err));
+
+// Routes
+const indexRoutes = require('./routes/index');
+const productRoutes = require('./routes/products');
+const visualRoutes = require('./routes/visualizations');
+
+app.use('/', indexRoutes);
+app.use('/produits', productRoutes);
+app.use('/visualisations', visualRoutes);
+
+// Error handling
+app.use((req, res, next) => {
+  res.status(404).render('404', { title: 'Page non trouvée' });
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render('500', { title: 'Erreur serveur' });
 });
 
-module.exports = app;
+// Start server
+app.listen(PORT, () => {
+  console.log(`Serveur en cours d'exécution sur le port ${PORT}`);
+});
