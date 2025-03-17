@@ -1,13 +1,13 @@
-# Projet d’Amélioration du Site Web du Café
+# Projet avec Node.js, Express et D3.js
 
 ## Description
-Ce projet vise à moderniser et enrichir le site Web d’un café. Il inclut la mise à jour de la présentation et l’ajout de nouvelles fonctionnalités basées sur Node.js et Express.
+Ce projet basé sur Node.js et Express.
 
 ## Auteur
 - Nom : Evgenii Morgunov
 
 ## Dépôt GitHub
-Retrouvez le code source sur [GitHub](https://github.com/MorgunovE/).
+Retrouvez le code source sur [GitHub](https://github.com/MorgunovE/Node_Express_D3_JS).
 
 ## Structure du Projet
 - `app.js` : Fichier principal Express.
