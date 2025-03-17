@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const productSchema = new Schema({
+const ProductSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -25,7 +25,7 @@ const productSchema = new Schema({
     enum: ['Électronique', 'Alimentation', 'Vêtements', 'Maison', 'Sports', 'Autre']
   }
 }, {
-  timestamps: true // Adds createdAt and updatedAt fields automatically
+  timestamps: true
 });
 
-module.exports = mongoose.model('Product', productSchema, 'listofproducttp');
+module.exports = mongoose.model('Product', ProductSchema);

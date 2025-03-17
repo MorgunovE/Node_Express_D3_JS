@@ -5,16 +5,16 @@ const validator = require('validator');
 const validateProduct = (data) => {
   const errors = {};
 
-  if (!data.nom || validator.isEmpty(data.nom.trim())) {
-    errors.nom = 'Le nom du produit est obligatoire';
+  if (!data.name || validator.isEmpty(data.name.trim())) {
+    errors.name = 'Le name du produit est obligatoire';
   }
 
   if (!data.quantite || isNaN(data.quantite) || Number(data.quantite) < 0) {
-    errors.quantite = 'La quantité doit être un nombre positif';
+    errors.quantite = 'La quantité doit être un namebre positif';
   }
 
   if (!data.prix || isNaN(data.prix) || Number(data.prix) < 0) {
-    errors.prix = 'Le prix doit être un nombre positif';
+    errors.prix = 'Le prix doit être un namebre positif';
   }
 
   if (!data.categorie || validator.isEmpty(data.categorie.trim())) {
@@ -56,7 +56,7 @@ exports.createProduct = async (req, res) => {
 
   try {
     const newProduct = new Product({
-      nom: req.body.nom,
+      name: req.body.name,
       quantite: req.body.quantite,
       prix: req.body.prix,
       categorie: req.body.categorie
@@ -100,7 +100,7 @@ exports.updateProduct = async (req, res) => {
 
   try {
     const updatedProduct = {
-      nom: req.body.nom,
+      name: req.body.name,
       quantite: req.body.quantite,
       prix: req.body.prix,
       categorie: req.body.categorie,
