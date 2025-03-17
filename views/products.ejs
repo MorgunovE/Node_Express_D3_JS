@@ -15,7 +15,6 @@
           <li><a href="/">Accueil</a></li>
           <li><a href="/products" class="active">Produits</a></li>
           <li><a href="/temp">Visualisation Temp</a></li>
-          <li><a href="/counties">Visualisation Counties</a></li>
           <li><a href="/kickstarter">Visualisation Kickstarter</a></li>
         </ul>
       </nav>
@@ -51,7 +50,7 @@
                   <td><%= new Date(product.updatedAt).toLocaleDateString('fr-FR') %></td>
                   <td class="actions">
                     <a href="/products/edit/<%= product._id %>" class="btn btn-edit">Modifier</a>
-                    <form action="/products/delete/<%= product._id %>" method="POST" class="delete-form">
+                    <form action="/products/<%= product._id %>?_method=DELETE" method="POST" class="delete-form">
                       <button type="submit" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit?')">Supprimer</button>
                     </form>
                   </td>

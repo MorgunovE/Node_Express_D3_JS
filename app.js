@@ -3,6 +3,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const methodOverride = require('method-override');
+
 
 // Load environment variables
 dotenv.config();
@@ -16,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
+app.use(methodOverride('_method'));
 
 // Set up view engine (we'll use EJS)
 app.set('view engine', 'ejs');
@@ -27,13 +30,15 @@ mongoose.connect(process.env.DB_URI)
   .catch(err => console.error('Erreur de connexion MongoDB:', err));
 
 // Routes
-const indexRoutes = require('./routes/index');
-const productRoutes = require('./routes/products');
-const visualRoutes = require('./routes/visualizations');
+const indexRouter = require('./routes/index');
+const productsRouter = require('./routes/products');
+const visualizationsRouter = require('./routes/visualizations');
 
-app.use('/', indexRoutes);
-app.use('/produits', productRoutes);
-app.use('/visualisations', visualRoutes);
+// ... other app setup code ...
+
+app.use('/', indexRouter);
+app.use('/products', productsRouter);
+app.use('/', visualizationsRouter);
 
 // Error handling
 app.use((req, res, next) => {

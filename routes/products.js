@@ -1,161 +1,148 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/product');
-const { body, validationResult } = require('express-validator');
+const { validationResult, check } = require('express-validator');
 
-// Input validation rules
-const productValidation = [
-  body('name')
-    .trim()
-    .isLength({ min: 2, max: 100 })
-    .withMessage('Le nom doit contenir entre 2 et 100 caractères'),
-  body('quantity')
-    .isInt({ min: 0 })
-    .withMessage('La quantité doit être un nombre entier positif'),
-  body('price')
-    .isFloat({ min: 0 })
-    .withMessage('Le prix doit être un nombre positif'),
-  body('category')
-    .notEmpty()
-    .withMessage('La catégorie est obligatoire')
+// Validation rules for products
+const productValidationRules = [
+  check('name').trim().isLength({ min: 2, max: 100 }).withMessage('Le nom doit contenir entre 2 et 100 caractères'),
+  check('quantity').isInt({ min: 0 }).withMessage('La quantité doit être un nombre positif'),
+  check('price').isFloat({ min: 0 }).withMessage('Le prix doit être un nombre positif'),
+  check('category').notEmpty().withMessage('La catégorie est obligatoire')
 ];
 
-// GET /products - Display all products
-router.get('/', async (req, res, next) => {
+// GET all products
+router.get('/', async (req, res) => {
   try {
-    const products = await Product.find().sort({ updatedAt: -1 });
+    const products = await Product.find().sort({ createdAt: -1 });
     res.render('products', { products });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erreur serveur');
   }
 });
 
-// GET /products/new - Display product creation form
+// GET new product form
 router.get('/new', (req, res) => {
   res.render('productForm', {
     title: 'Ajouter un nouveau produit',
-    action: '/products',
     product: null,
-    errors: []
+    errors: null,
+    action: '/products'
   });
 });
 
-// POST /products - Create a new product
-router.post('/', productValidation, async (req, res, next) => {
+// POST create new product
+router.post('/', productValidationRules, async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.render('productForm', {
+      title: 'Ajouter un nouveau produit',
+      product: req.body,
+      errors: errors.array(),
+      action: '/products'
+    });
+  }
+
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.render('productForm', {
-        title: 'Ajouter un nouveau produit',
-        action: '/products',
-        product: req.body,
-        errors: errors.array()
-      });
-    }
-
-    const { name, quantity, price, category } = req.body;
-
-    const newProduct = new Product({
-      name,
-      quantity: parseInt(quantity),
-      price: parseFloat(price),
-      category
+    const product = new Product({
+      name: req.body.name,
+      quantity: req.body.quantity,
+      price: req.body.price,
+      category: req.body.category
     });
 
-    await newProduct.save();
+    await product.save();
     res.redirect('/products');
-
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erreur serveur');
   }
 });
 
-// GET /products/:id - Display a single product
-router.get('/:id', async (req, res, next) => {
+// GET product details
+router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-
     if (!product) {
       return res.status(404).send('Produit non trouvé');
     }
-
     res.render('product-detail', { product });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erreur serveur');
   }
 });
 
-// GET /products/edit/:id - Display product edit form
-router.get('/edit/:id', async (req, res, next) => {
+// GET edit product form
+router.get('/edit/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-
     if (!product) {
       return res.status(404).send('Produit non trouvé');
     }
-
     res.render('productForm', {
       title: 'Modifier le produit',
-      action: `/products/update/${product._id}`,
-      product,
-      errors: []
+      product: product,
+      errors: null,
+      action: `/products/${product._id}?_method=PUT`
     });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erreur serveur');
   }
 });
 
-// POST /products/update/:id - Update a product
-router.post('/update/:id', productValidation, async (req, res, next) => {
+// PUT update product
+router.put('/:id', productValidationRules, async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.render('productForm', {
+      title: 'Modifier le produit',
+      product: { ...req.body, _id: req.params.id },
+      errors: errors.array(),
+      action: `/products/${req.params.id}?_method=PUT`
+    });
+  }
+
   try {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.render('productForm', {
-        title: 'Modifier le produit',
-        action: `/products/update/${req.params.id}`,
-        product: { ...req.body, _id: req.params.id },
-        errors: errors.array()
-      });
-    }
-
-    const { name, quantity, price, category } = req.body;
-
-    const updatedProduct = await Product.findByIdAndUpdate(
+    const product = await Product.findByIdAndUpdate(
       req.params.id,
       {
-        name,
-        quantity: parseInt(quantity),
-        price: parseFloat(price),
-        category,
-        updatedAt: Date.now()
+        name: req.body.name,
+        quantity: req.body.quantity,
+        price: req.body.price,
+        category: req.body.category
       },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
-    if (!updatedProduct) {
+    if (!product) {
       return res.status(404).send('Produit non trouvé');
     }
 
     res.redirect('/products');
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erreur serveur');
   }
 });
 
-// POST /products/delete/:id - Delete a product
-router.post('/delete/:id', async (req, res, next) => {
+// DELETE product
+router.delete('/:id', async (req, res) => {
   try {
-    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+    const product = await Product.findByIdAndDelete(req.params.id);
 
-    if (!deletedProduct) {
+    if (!product) {
       return res.status(404).send('Produit non trouvé');
     }
 
     res.redirect('/products');
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erreur serveur');
   }
 });
 
