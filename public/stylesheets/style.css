@@ -425,6 +425,36 @@ th {
   margin: 0 auto 1.5rem;
 }
 
+.btn-details {
+  background-color: #3498db;
+  color: white;
+  margin-right: 5px;
+}
+
+.btn-details:hover {
+  background-color: #217dbb;
+}
+
+th[data-sort]:after {
+  content: " ↑";
+  font-size: 0.8em;
+  color: #3498db;
+}
+
+th[data-sort="desc"]:after {
+  content: " ↓";
+}
+
+table th {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+table th:hover {
+  background-color: #eee;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .features {
