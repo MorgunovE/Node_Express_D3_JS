@@ -1,11 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accueil - Application de Gestion de Produits</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="/stylesheets/styleIndexPages.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Bienvenue sur l'Application de Gestion</h1>
+      <nav>
+        <ul>
+          <li><a href="/" class="active">Accueil</a></li>
+          <li><a href="/products">Produits</a></li>
+          <li><a href="/temp">Visualisation Temp</a></li>
+          <li><a href="/counties">Visualisation Counties</a></li>
+          <li><a href="/kickstarter">Visualisation Kickstarter</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="introduction">
+        <h2>Application de Gestion</h2>
+        <p>Bienvenue sur notre application de gestion de produits et de visualisation de données.</p>
+
+        <div class="features">
+          <div class="feature">
+            <h3>Gestion de Produits</h3>
+            <p>Ajoutez, modifiez et supprimez des produits dans votre inventaire.</p>
+            <a href="/products" class="btn">Voir les produits</a>
+          </div>
+
+          <div class="feature">
+            <h3>Visualisations</h3>
+            <p>Explorez différentes visualisations de données avec D3.js.</p>
+            <a href="/temp" class="btn">Voir les visualisations</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> - Application de Gestion de Produits</p>
+    </footer>
+  </div>
+
+  <script src="/javascripts/scriptIndexPages.js"></script>
+</body>
 </html>

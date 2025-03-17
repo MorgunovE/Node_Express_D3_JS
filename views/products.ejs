@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste des Produits</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Liste des Produits</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/products" class="active">Produits</a></li>
+          <li><a href="/temp">Visualisation Temp</a></li>
+          <li><a href="/counties">Visualisation Counties</a></li>
+          <li><a href="/kickstarter">Visualisation Kickstarter</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="product-actions">
+        <a href="/products/new" class="btn btn-primary">Ajouter un Nouveau Produit</a>
+      </div>
+
+      <div class="product-list">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Quantité</th>
+              <th>Prix</th>
+              <th>Catégorie</th>
+              <th>Date de Création</th>
+              <th>Dernière Modification</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(products && products.length > 0) { %>
+              <% products.forEach(product => { %>
+                <tr>
+                  <td><%= product.name %></td>
+                  <td><%= product.quantity %></td>
+                  <td><%= product.price.toFixed(2) %> €</td>
+                  <td><%= product.category %></td>
+                  <td><%= new Date(product.createdAt).toLocaleDateString('fr-FR') %></td>
+                  <td><%= new Date(product.updatedAt).toLocaleDateString('fr-FR') %></td>
+                  <td class="actions">
+                    <a href="/products/edit/<%= product._id %>" class="btn btn-edit">Modifier</a>
+                    <form action="/products/delete/<%= product._id %>" method="POST" class="delete-form">
+                      <button type="submit" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit?')">Supprimer</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="7" class="no-products">Aucun produit disponible.</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> - Application de Gestion de Produits</p>
+    </footer>
+  </div>
+
+  <script src="/javascripts/productList.js"></script>
+</body>
+</html>

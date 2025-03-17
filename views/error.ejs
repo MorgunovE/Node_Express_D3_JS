@@ -1,3 +1,35 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= message || 'Erreur' %> - Gestion de Produits</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" href="/stylesheets/style_error.css">
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <h1><%= message || 'Erreur' %></h1>
+    <p><%= description || 'Une erreur est survenue lors du traitement de votre demande.' %></p>
+
+    <% if (status) { %>
+      <div class="status-badge">Statut: <%= status %></div>
+    <% } %>
+
+    <% if (error && error.stack && process.env.NODE_ENV !== 'production') { %>
+      <div class="error-details">
+        <strong>Détails techniques:</strong>
+        <pre><%= error.stack %></pre>
+      </div>
+    <% } %>
+
+    <div class="action-buttons">
+      <a href="/" class="btn">Retour à l'accueil</a>
+      <a href="javascript:history.back()" class="btn">Page précédente</a>
+    </div>
+  </div>
+
+  <script src="/javascripts/script_error.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+.map-container {
+    position: relative;
+    margin: 20px auto;
+    max-width: 960px;
+}
+
+#county-map {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 10;
+    max-width: 200px;
+}
+
+.county {
+    stroke: #fff;
+    stroke-width: 0.5px;
+}
+
+.county:hover {
+    stroke: #000;
+    stroke-width: 1px;
+}
+
+.state-borders {
+    fill: none;
+    stroke: #000;
+    stroke-width: 1px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+#legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 15px;
+    margin-right: 5px;
+}
+
+.controls {
+    margin: 20px auto;
+    text-align: center;
+}
+
+#education-select {
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+}
+
+#education-select:focus {
+    outline: none;
+    border-color: #007bff;
+}

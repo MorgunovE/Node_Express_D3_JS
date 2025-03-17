@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails du produit</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/products">Produits</a></li>
+        <li><a href="/temp">Visualisation Temp</a></li>
+        <li><a href="/counties">Visualisation Counties</a></li>
+        <li><a href="/kickstarter">Visualisation Kickstarter</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1><%= product.name %></h1>
+
+    <div class="product-detail">
+      <div class="product-info">
+        <p><strong>Catégorie:</strong> <%= product.category %></p>
+        <p><strong>Quantité en stock:</strong> <%= product.quantity %></p>
+        <p><strong>Prix:</strong> <%= product.price %> $</p>
+        <p><strong>Date de création:</strong> <%= new Date(product.createdAt).toLocaleDateString('fr-FR') %></p>
+        <p><strong>Dernière modification:</strong> <%= new Date(product.updatedAt).toLocaleDateString('fr-FR') %></p>
+      </div>
+
+      <div class="product-actions">
+        <a href="/products/<%= product._id %>/edit" class="btn-primary">Modifier</a>
+        <form action="/products/<%= product._id %>?_method=DELETE" method="POST" class="delete-form">
+          <button type="submit" class="btn-delete">Supprimer</button>
+        </form>
+        <a href="/products" class="btn-secondary">Retour à la liste</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; <%= new Date().getFullYear() %> - Application Produits</p>
+  </footer>
+
+  <script src="/javascripts/productDetail.js"></script>
+</body>
+</html>

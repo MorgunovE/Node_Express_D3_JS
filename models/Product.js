@@ -1,41 +1,31 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const Schema = mongoose.Schema;
 
-const ProductSchema = new Schema({
-  nom: {
+const productSchema = new Schema({
+  name: {
     type: String,
-    required: [true, 'Le nom du produit est obligatoire'],
+    required: true,
     trim: true,
-    minlength: [2, 'Le nom doit contenir au moins 2 caractères']
+    minlength: 2,
+    maxlength: 100
   },
-  quantite: {
+  quantity: {
     type: Number,
-    required: [true, 'La quantité est obligatoire'],
-    min: [0, 'La quantité ne peut pas être négative']
+    required: true,
+    min: 0
   },
-  prix: {
+  price: {
     type: Number,
-    required: [true, 'Le prix est obligatoire'],
-    min: [0, 'Le prix ne peut pas être négatif']
+    required: true,
+    min: 0
   },
-  categorie: {
+  category: {
     type: String,
-    required: [true, 'La catégorie est obligatoire'],
-    trim: true
-  },
-  dateCreation: {
-    type: Date,
-    default: Date.now
-  },
-  dateModification: {
-    type: Date,
-    default: null
+    required: true,
+    enum: ['Électronique', 'Alimentation', 'Vêtements', 'Maison', 'Sports', 'Autre']
   }
 }, {
-  timestamps: {
-    createdAt: 'dateCreation',
-    updatedAt: 'dateModification'
-  }
+  timestamps: true // Adds createdAt and updatedAt fields automatically
 });
 
-module.exports = mongoose.model('Product', ProductSchema, 'listofproducttp');
+module.exports = mongoose.model('Product', productSchema, 'listofproducttp');

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualisation des Projets Kickstarter</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/style_kickstarter.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Financement de Projets Kickstarter</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/products">Produits</a></li>
+                    <li><a href="/temp">Visualisation Temp</a></li>
+                    <li><a href="/counties">Visualisation Counties</a></li>
+                    <li><a href="/kickstarter" class="active">Visualisation Kickstarter</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <p id="description">Projets Kickstarter les plus financés par catégorie</p>
+            <div id="chart-container">
+                <div id="tooltip" class="tooltip"></div>
+                <svg id="tree-map"></svg>
+                <div id="legend"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; <%= new Date().getFullYear() %> - Visualisation de Projets Kickstarter</p>
+        </footer>
+    </div>
+
+    <script src="/javascripts/script_kickstarter.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><%= title %></h1>
+      <nav>
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/products">Produits</a></li>
+          <li><a href="/temp">Visualisation Temp</a></li>
+          <li><a href="/counties">Visualisation Counties</a></li>
+          <li><a href="/kickstarter">Visualisation Kickstarter</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="form-container">
+        <form action="<%= action %>" method="POST" id="productForm">
+          <% if (errors && errors.length > 0) { %>
+            <div class="errors">
+              <ul>
+                <% errors.forEach(error => { %>
+                  <li><%= error.msg %></li>
+                <% }) %>
+              </ul>
+            </div>
+          <% } %>
+
+          <div class="form-group">
+            <label for="name">Nom du produit*</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value="<%= product ? product.name : '' %>"
+              required
+              minlength="2"
+              maxlength="100">
+          </div>
+
+          <div class="form-group">
+            <label for="quantity">Quantité*</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              value="<%= product ? product.quantity : 0 %>"
+              required
+              min="0">
+          </div>
+
+          <div class="form-group">
+            <label for="price">Prix (€)*</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              value="<%= product ? product.price : '' %>"
+              required
+              min="0"
+              step="0.01">
+          </div>
+
+          <div class="form-group">
+            <label for="category">Catégorie*</label>
+            <select id="category" name="category" required>
+              <option value="">Sélectionnez une catégorie</option>
+              <% const categories = ['Électronique', 'Alimentation', 'Vêtements', 'Maison', 'Sports', 'Autre']; %>
+              <% categories.forEach(cat => { %>
+                <option value="<%= cat %>" <%= (product && product.category === cat) ? 'selected' : '' %>><%= cat %></option>
+              <% }) %>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <a href="/products" class="btn">Annuler</a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> - Application de Gestion de Produits</p>
+    </footer>
+  </div>
+
+  <script src="/javascripts/productForm.js"></script>
+</body>
+</html>

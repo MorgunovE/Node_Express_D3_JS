@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte Thermique des Températures Globales</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/style_temp.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Carte Thermique des Températures Globales</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/products">Produits</a></li>
+                    <li><a href="/temp" class="active">Visualisation Temp</a></li>
+                    <li><a href="/counties">Visualisation Counties</a></li>
+                    <li><a href="/kickstarter">Visualisation Kickstarter</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <h3 id="description">1753 - 2015: température de base 8.66℃</h3>
+            <div id="heat-map"></div>
+        </main>
+
+        <footer>
+            <p>&copy; <%= new Date().getFullYear() %> - Visualisation de Températures</p>
+        </footer>
+    </div>
+    <div id="tooltip"></div>
+
+    <script src="/javascripts/script_temp.js"></script>
+</body>
+</html>
