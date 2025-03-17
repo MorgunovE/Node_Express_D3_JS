@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Non Trouvée</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Page Non Trouvée</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/products">Produits</a></li>
+          <li><a href="/temp">Visualisation Temp</a></li>
+          <li><a href="/counties">Visualisation Counties</a></li>
+          <li><a href="/kickstarter">Visualisation Kickstarter</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="error-container">
+        <h2>Erreur 404</h2>
+        <p>La page que vous recherchez n'existe pas.</p>
+        <a href="/" class="btn-primary">Retour à l'accueil</a>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; <%= new Date().getFullYear() %> - Application de Gestion de Produits</p>
+    </footer>
+  </div>
+</body>
+</html>

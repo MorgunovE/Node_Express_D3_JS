@@ -269,6 +269,39 @@ th {
   gap: 15px;
 }
 
+.error-container {
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.error-container h2 {
+  font-size: 3em;
+  color: #e07f3b;
+  margin-bottom: 20px;
+}
+
+.error-container p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #e07f3b;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #b06227;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   nav ul {
